@@ -6,7 +6,8 @@
 Param (
     [string] $packagedownloaduri,
     [string] $vmhostname,
-    [string] $companyauthcode
+    [string] $companyauthcode,
+    [string] $vmname
 )
 
 # Folders
@@ -31,7 +32,7 @@ Start-Process -FilePath 'C:\Program Files\7-Zip\7z.exe' -ArgumentList "x $packag
 
 $localHostname = $vmhostname
 $instanceid = 1 # hardcodeed for now
-$clientname = "BackupGateway-$instanceid"
+$clientname = "$vmname-$instanceid"
 $inputfile = "C:\tmp\backupgateway-package-folder\install.xml"
 $xml = New-Object XML
 $xml.load($inputfile)
