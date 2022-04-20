@@ -11,12 +11,20 @@ Param (
 )
 
 # Folders
-New-Item -ItemType Directory c:\tmp -Force
+New-Item -ItemType Directory c:\MetallicBackupGatewayPackage -Force
+
+# initialize-disk
+$PhysicalDisks = Get-PhysicalDisk -CanPool $True;
+New-StoragePool -FriendlyName 'Metallic' -StorageSubsystemFriendlyName 'Windows Storage*' -PhysicalDisks $PhysicalDisks
+$VirutalDisk = New-VirtualDisk -FriendlyName 'Metallic' -StoragePoolFriendlyName 'Metallic' -ResiliencySettingName Simple -AutoNumberOfColumns -UseMaximumSize -ProvisioningType Fixed #-Interleave 32768
+$Disk = Initialize-Disk -VirtualDisk $VirutalDisk -PartitionStyle GPT -PassThru
+New-Volume -Disk $Disk -FileSystem NTFS -DriveLetter E -FriendlyName 'Metallic' #-AllocationUnitSize 32768
+Start-Sleep -Seconds 5
 
 # Download backupgateway package 
-(New-Object System.Net.WebClient).DownloadFile($packagedownloaduri, "C:\tmp\backupgateway-package.exe")
-$packageFile = 'C:\tmp\backupgateway-package.exe'
-$packageFolder = 'C:\tmp\backupgateway-package-folder'
+(New-Object System.Net.WebClient).DownloadFile($packagedownloaduri, "C:\MetallicBackupGatewayPackage\backupgateway-package.exe")
+$packageFile = 'C:\MetallicBackupGatewayPackage\backupgateway-package.exe'
+$packageFolder = 'C:\MetallicBackupGatewayPackage\backupgateway-package-folder'
 $installerPath = 'C:\7z-x64.exe'
 
 # Force use of TLS 1.2
@@ -33,7 +41,7 @@ Start-Process -FilePath 'C:\Program Files\7-Zip\7z.exe' -ArgumentList "x $packag
 $localHostname = $vmhostname
 $instanceid = 1 # hardcodeed for now
 $clientname = "$vmname-$instanceid"
-$inputfile = "C:\tmp\backupgateway-package-folder\install.xml"
+$inputfile = "C:\MetallicBackupGatewayPackage\backupgateway-package-folder\install.xml"
 $xml = New-Object XML
 $xml.load($inputfile)
 $client = $xml.SelectSingleNode("//clientComposition/clientInfo/client")
@@ -42,16 +50,16 @@ $jobResulsDir = $xml.SelectSingleNode("//clientComposition/clientInfo/client/job
 $indexCache = $xml.SelectSingleNode("//clientComposition/components/mediaAgent/indexCacheDirectory")
 $clientEntity.hostName = $localHostname
 $clientEntity.clientName = $clientname
-$client.installDirectory = "C:\ContentStore"
-$jobResulsDir.path = "C:\JobResults"
-$indexCache.path = "C:\IndexCache"
+$client.installDirectory = "E:\ContentStore"
+$jobResulsDir.path = "E:\JobResults"
+$indexCache.path = "E:\IndexCache"
 $xml.Save($inputfile)
 
 
 #backupgateway-install.
-C:\tmp\backupgateway-package-folder\Setup.exe /silent /authcode ${companyauthcode}
+C:\MetallicBackupGatewayPackage\backupgateway-package-folder\Setup.exe /silent /authcode ${companyauthcode}
 
 Wait-Process -InputObject (Get-Process setup)
 
 # files-cleanup
-Remove-Item -Recurse -Force 'C:\tmp\backupgateway-package-folder' -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force 'C:\MetallicBackupGatewayPackage\backupgateway-package-folder' -ErrorAction SilentlyContinue
