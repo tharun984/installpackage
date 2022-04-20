@@ -18,7 +18,7 @@ $PhysicalDisks = Get-PhysicalDisk -CanPool $True;
 New-StoragePool -FriendlyName 'Metallic' -StorageSubsystemFriendlyName 'Windows Storage*' -PhysicalDisks $PhysicalDisks
 $VirutalDisk = New-VirtualDisk -FriendlyName 'Metallic' -StoragePoolFriendlyName 'Metallic' -ResiliencySettingName Simple -AutoNumberOfColumns -UseMaximumSize -ProvisioningType Fixed #-Interleave 32768
 $Disk = Initialize-Disk -VirtualDisk $VirutalDisk -PartitionStyle GPT -PassThru
-New-Volume -Disk $Disk -FileSystem NTFS -DriveLetter E -FriendlyName 'Metallic' #-AllocationUnitSize 32768
+New-Volume -Disk $Disk -FileSystem NTFS -DriveLetter F -FriendlyName 'Metallic' #-AllocationUnitSize 32768
 Start-Sleep -Seconds 5
 
 # Download backupgateway package 
@@ -50,9 +50,9 @@ $jobResulsDir = $xml.SelectSingleNode("//clientComposition/clientInfo/client/job
 $indexCache = $xml.SelectSingleNode("//clientComposition/components/mediaAgent/indexCacheDirectory")
 $clientEntity.hostName = $localHostname
 $clientEntity.clientName = $clientname
-$client.installDirectory = "E:\ContentStore"
-$jobResulsDir.path = "E:\JobResults"
-$indexCache.path = "E:\IndexCache"
+$client.installDirectory = "F:\ContentStore"
+$jobResulsDir.path = "F:\JobResults"
+$indexCache.path = "F:\IndexCache"
 $xml.Save($inputfile)
 
 
