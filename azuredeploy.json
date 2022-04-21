@@ -212,7 +212,7 @@
    "variables": {
     "vName" : "[parameters('vmName')]",
     "storageAccountName": "[format('bootdiags{0}', uniqueString(resourceGroup().id))]",
-    "nicName": "myVMNic",
+    "nicName": "[concat(parameters('vmName'), '-nic')]",
     "addressPrefix": "10.0.0.0/16",
     "subnetName": "Subnet",
     "subnetPrefix": "10.0.0.0/24",
@@ -292,7 +292,7 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIpName'))]",
-        "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]"
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
       ]
     },
     {
@@ -346,7 +346,7 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
       ]
     },
     {
