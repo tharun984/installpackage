@@ -218,9 +218,7 @@
     "subnetPrefix": "10.0.0.0/24",
     "virtualNetworkName": "MyVNET",
     "networkSecurityGroupName": "default-NSG",
-     "publicIpAddressId": {
-      "id": "[resourceId(parameters('publicIpResourceGroupName'), 'Microsoft.Network/publicIPAddresses', parameters('publicIpName'))]"
-    }
+     "publicIpAddressId": "[resourceId(parameters('publicIpResourceGroupName'), 'Microsoft.Network/publicIPAddresses', parameters('publicIpName'))]"
   },
   "resources": [
     {
