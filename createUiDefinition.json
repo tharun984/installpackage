@@ -3,6 +3,19 @@
     "handler": "Microsoft.Azure.CreateUIDef",
     "version": "0.1.2-preview",
     "parameters": {
+        "config": {
+            "basics": {
+                "description": "Metallic backup gateway wizard",
+                "location": {
+                    "label": "Region",
+                    "toolTip": "Choose the Azure region that's right for you and your customers. Not every resource is available in every region.",
+                    "resourceTypes": [
+                        "Microsoft.Compute/virtualMachines"
+                    ],
+                    "visible": true
+                }
+            }
+        },
         "basics": [
             {
                 "name": "vmName",
