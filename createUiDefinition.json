@@ -96,7 +96,7 @@
                         "toolTip": "Storage Account for the Virtual Machine's diagnostics",
                         "defaultValue": {
                             "type": "Standard_LRS",
-                            "name": "[concat(replace(basics('vmName'), '-', ''), take(replace(guid(), '-', ''), 10))]"
+                            "name": "[take(concat(replace(basics('vmName'), '-', ''), take(replace(guid(), '-', ''), 10)), 23)]"
                         },
                         "constraints": {
                             "allowedTypes": [
