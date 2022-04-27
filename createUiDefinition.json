@@ -9,7 +9,7 @@
                 "type": "Microsoft.Common.TextBox",
                 "label": "Virtual Machine name",
                 "toolTip": "The name of the Virtual Machine.",
-                "defaultValue": "gateway",
+                "defaultValue": "metallic-gateway",
                 "constraints": {
                     "required": true,
                     "regex": "^[a-z0-9A-Z-]{3,79}$",
@@ -84,10 +84,9 @@
                         "label": "Virtual machine size",
                         "toolTip": "The size of virtual machine to provision.",
                         "recommendedSizes": [
-                            "Standard_D2_v2",
-                            "Standard_A2_v2"
+                            "Standard_B4ms"
                         ],
-                        "osPlatform": "Linux",
+                        "osPlatform": "Windows",
                         "count": "1"
                     },
                     {
@@ -179,7 +178,7 @@
                         "name": "backupGatewayPackage",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Backup Gateway Package URL",
-                        "toolTip": "Copy the backup gateway package URL from metallic hub",
+                        "toolTip": "Copy the backup gateway package download URL from metallic hub",
                         "constraints": {
                             "required": true,
                             "regex": "(https://)[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.(exe)",
@@ -190,7 +189,7 @@
                         "name": "companyauthcode",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Metallic AuthCode",
-                        "toolTip": "AuthCode from your Metallic account",
+                        "toolTip": "Copy the AuthCode from your Metallic account",
                         "constraints": {
                             "required": true,
                             "regex": "^[a-zA-Z0-9]{9}$",
